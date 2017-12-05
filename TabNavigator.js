@@ -22,7 +22,12 @@ export default class TabNavigator extends React.Component {
     sceneStyle: ViewPropTypes.style,
     tabBarStyle: TabBar.propTypes.style,
     tabBarShadowStyle: TabBar.propTypes.shadowStyle,
-    hidesTabTouch: PropTypes.bool
+    hidesTabTouch: PropTypes.bool,
+    usingImage: PropTypes.bool
+  };
+
+  static defaultProps = {
+    usingImage: true
   };
 
   constructor(props, context) {
@@ -104,6 +109,10 @@ export default class TabNavigator extends React.Component {
         icon = item.props.renderSelectedIcon();
       } else if (item.props.renderIcon) {
         let defaultIcon = item.props.renderIcon();
+        let defaultSelectedIcon = styles.defaultSelectedIcon;
+        if (!this.props.usingImage) {
+            defaultSelectedIcon = defaultSelectedTitle;
+        }
         icon = React.cloneElement(defaultIcon, {
           style: [defaultIcon.props.style, styles.defaultSelectedIcon],
         });
